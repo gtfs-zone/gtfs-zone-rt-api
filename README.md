@@ -1,5 +1,7 @@
 # gtfs-zone-rt-api
 
+[![CI](https://img.shields.io/github/actions/workflow/status/gtfs-zone/gtfs-zone-rt-api/check.yml?branch=main&label=CI)](https://github.com/gtfs-zone/gtfs-zone-rt-api/actions/workflows/check.yml?query=branch%3Amain) [![License: AGPL-3.0-or-later](https://img.shields.io/badge/license-AGPL--3.0--or--later-blue)](LICENSE.txt) [![Container image](https://img.shields.io/badge/image-ghcr.io-blue?logo=docker&logoColor=white)](https://github.com/gtfs-zone/gtfs-zone-rt-api/pkgs/container/gtfs-zone-rt-api)
+
 Core API for [GTFS.Zone](https://gtfs.zone): serves GTFS-RT feeds and the JSON API [rt-manager](https://github.com/gtfs-zone/gtfs-zone-rt-manager) uses to manage feeds, trackers and service alerts. rt-api has no UI of its own; rt-manager is the UI.
 
 Part of a larger stack; see [gtfs-zone-infra](https://github.com/gtfs-zone/gtfs-zone-infra) for the full deployment.
