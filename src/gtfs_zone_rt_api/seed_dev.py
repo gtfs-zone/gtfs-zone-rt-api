@@ -1,7 +1,7 @@
 """Seed the local dev stack's poller feeds, from inside the compose network.
 
 `docker compose up` should be enough to reach a stack you can look at, which
-means the rows rt-pollers's two pollers publish into have to exist before
+means the rows rt-pollers's pollers publish into have to exist before
 they start. This is the one-shot container that creates them, gated by
 `service_completed_successfully` the same way `migrate` is.
 
@@ -10,9 +10,9 @@ carries neither `scripts/` nor `uv`: a console script on PATH is the only thing
 a compose `command:` can reach. That also means it ships inside the production
 wheel, so it refuses to run unless DEBUG is set.
 
-The two tracker ids here are fixed strings, not the surrogates a tracker
+The tracker ids here are fixed strings, not the surrogates a tracker
 normally gets, because docker-compose.yml names them literally in each poller's
-INGEST_VEHICLE_ID and rt-api scans `vehicle:{tracker.id}:*`. The two have to
+INGEST_TRACKER_ID and rt-api scans `vehicle:{tracker.id}:*`. The two have to
 agree; changing one means changing the other.
 
 `west` is deliberately not here. It is a real Traccar device with schedule
@@ -72,6 +72,14 @@ SEED_FEEDS = (
         nickname="Columbia County",
         tracker_id="columbia-county",
     ),
+    SeedFeed(
+        feed_name="hudsonlink",
+        static_feed_url=(
+            "https://s3.amazonaws.com/datatools-511ny/public/Hudson_Link.zip"
+        ),
+        nickname="Hudson Link",
+        tracker_id="hudsonlink",
+    ),
 )
 
 
@@ -93,7 +101,7 @@ async def _owner_subject() -> str:
 
 
 async def _seed(session: AsyncSession) -> list[int]:
-    """Create the owner and both feeds. Returns the ids of new feeds."""
+    """Create the owner and every seed feed. Returns the ids of new feeds."""
     subject = await _owner_subject()
     # The same call a real login makes, so a later browser sign-in lands on this
     # account instead of minting a second one.
