@@ -1,3 +1,14 @@
+## v0.3.0 (2026-11-05)
+
+### Feat
+
+- **seed**: seed the hudsonlink feed and tracker
+
+### Fix
+
+- **deps**: db-models v0.3.0, its object store over obstore instead of boto3
+- **deps**: upgrade packages with published security advisories
+
 ## v0.2.2 (2026-10-02)
 
 ### Fix
