@@ -1,3 +1,9 @@
+## v0.4.0 (2026-11-05)
+
+### Feat
+
+- **admin**: route_type labels and grouped select from gtfs-zone-vocab
+
 ## v0.3.0 (2026-11-05)
 
 ### Feat
