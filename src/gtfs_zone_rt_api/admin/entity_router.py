@@ -8,6 +8,11 @@ from gtfs_zone_db_models.models.informed_entity import InformedEntity
 from gtfs_zone_db_models.models.service_alert import ServiceAlert
 from gtfs_zone_db_models.models.tracker import Tracker
 from gtfs_zone_db_models.models.user import User
+from gtfs_zone_vocab.route_types import (
+    ROUTE_TYPE_FAMILIES,
+    ROUTE_TYPES,
+    RouteTypeInfo,
+)
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -60,18 +65,24 @@ async def root_redirect() -> RedirectResponse:
 _TEMPLATES_DIR = Path(__file__).parent / "templates"
 templates = Jinja2Templates(directory=str(_TEMPLATES_DIR))
 
-_ROUTE_TYPE_LABELS = {
-    0: "Tram / Light Rail",
-    1: "Subway / Metro",
-    2: "Rail",
-    3: "Bus",
-    4: "Ferry",
-    5: "Cable Tram",
-    6: "Aerial Lift",
-    7: "Funicular",
-    11: "Trolleybus",
-    12: "Monorail",
-}
+_ROUTE_TYPE_LABELS = {rt.code: rt.label.en for rt in ROUTE_TYPES}
+
+# <select> options: base GTFS codes first, then Google HVT codes grouped by
+# family in vocab family order.
+_ROUTE_TYPE_OPTION_GROUPS: list[tuple[str, list[RouteTypeInfo]]] = [
+    ("GTFS", [rt for rt in ROUTE_TYPES if rt.source == "gtfs"]),
+    *(
+        (family.label.en, members)
+        for family in ROUTE_TYPE_FAMILIES
+        if (
+            members := [
+                rt
+                for rt in ROUTE_TYPES
+                if rt.source == "google-hvt" and rt.family == family.slug
+            ]
+        )
+    ),
+]
 
 
 async def _current_user_id(request: Request) -> int:
@@ -109,6 +120,7 @@ def _render_partial(
             "entities": entities,
             "error": error,
             "route_type_labels": _ROUTE_TYPE_LABELS,
+            "route_type_option_groups": _ROUTE_TYPE_OPTION_GROUPS,
         },
     )
 
