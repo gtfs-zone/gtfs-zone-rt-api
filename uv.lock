@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.13"
 resolution-markers = [
     "python_full_version >= '3.14'",
@@ -508,8 +508,8 @@ wheels = [
 
 [[package]]
 name = "gtfs-zone-db-models"
-version = "0.3.0"
-source = { git = "https://github.com/gtfs-zone/gtfs-zone-db-models.git?tag=v0.3.0#bf6248a90b90b2a6d0abd4842a19b8ac1cfb6010" }
+version = "0.4.0"
+source = { git = "https://github.com/gtfs-zone/gtfs-zone-db-models.git?tag=v0.4.0#78817bfeebba21247f45f372fb6c8fc63b68cbc3" }
 dependencies = [
     { name = "alembic" },
     { name = "asyncpg" },
@@ -561,7 +561,7 @@ requires-dist = [
     { name = "celery", extras = ["redis"] },
     { name = "fastapi", extras = ["standard"] },
     { name = "gtfs-realtime-bindings", specifier = ">=2.2.0" },
-    { name = "gtfs-zone-db-models", git = "https://github.com/gtfs-zone/gtfs-zone-db-models.git?tag=v0.3.0" },
+    { name = "gtfs-zone-db-models", git = "https://github.com/gtfs-zone/gtfs-zone-db-models.git?tag=v0.4.0" },
     { name = "gtfs-zone-vocab", git = "https://github.com/gtfs-zone/gtfs-zone-vocab.git?tag=v0.1.0" },
     { name = "httpx" },
     { name = "itsdangerous", specifier = ">=2.2" },
